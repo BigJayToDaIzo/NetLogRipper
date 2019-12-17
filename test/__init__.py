@@ -1,0 +1,1 @@
+# From the root of this project `run python -m unittest -v` to execute all tests in the /test folder
