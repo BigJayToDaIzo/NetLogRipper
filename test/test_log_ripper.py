@@ -15,11 +15,11 @@ class TestLogRipperInit(unittest.TestCase):
         self.assertEqual(log_ripper.disconnections, 0)
         self.assertEqual(log_ripper.seconds_disconnected, 0)
         self.assertEqual(log_ripper.began_monitoring,
-                         {'weekday': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                          'second': '', 'day_part': '', 'timezone': ''})
+                         {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
+                          'second': '', 'timezone': ''})
         self.assertEqual(log_ripper.ended_monitoring,
-                         {'weekday': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                          'second': '', 'day_part': '', 'timezone': ''})
+                         {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
+                          'second': '', 'timezone': ''})
         self.assertEqual(log_ripper.file_name, '')
         self.assertEqual(log_ripper.file_stream, None)
         self.assertEqual(log_ripper.lines, [])
@@ -41,7 +41,6 @@ class TestLogRipperHappy(unittest.TestCase):
     def test_set_filename_when_logfile_name_passed(self):
         self.assertEqual(self.log_ripper.file_name, 'testpinglog.txt')
 
-
     def test_reads_in_file_when_logfile_exists(self):
         self.assertIsNotNone(self.log_ripper.file_stream)
 
@@ -53,6 +52,17 @@ class TestLogRipperHappy(unittest.TestCase):
         self.log_ripper.populate_lines_array()
         self.log_ripper.populate_words_array()
         self.assertIsNotNone(self.log_ripper.words)
+
+    def test_set_began_monitoring(self):
+        self.log_ripper.populate_lines_array()
+        self.log_ripper.populate_words_array()
+        self.log_ripper.set_began_monitoring()
+        self.assertNotEqual(self.log_ripper.began_monitoring,
+                            {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
+                             'second': '', 'timezone': ''})
+        # self.assertEqual(self.log_ripper.began_monitoring,
+        #                  {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '09', 'minute': '50',
+        #                   'second': '13', 'timezone': 'CST'})
 
 
 class TestLogRipperSad(unittest.TestCase):

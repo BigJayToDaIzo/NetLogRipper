@@ -10,10 +10,10 @@ class LogRipper(object):
         self.not_connected = False
         self.disconnections = 0
         self.seconds_disconnected = 0
-        self.began_monitoring = {'weekday': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                                 'second': '', 'day_part': '', 'timezone': ''}
-        self.ended_monitoring = {'weekday': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                                 'second': '', 'day_part': '', 'timezone': ''}
+        self.began_monitoring = {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
+                                 'second': '', 'timezone': ''}
+        self.ended_monitoring = {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
+                                 'second': '', 'timezone': ''}
         self.file_name = ''
         self.file_stream = None
         self.lines = []
@@ -51,3 +51,13 @@ class LogRipper(object):
             self.words[i] = line.split()
             i += 1
 
+    def set_began_monitoring(self):
+        self.began_monitoring['week_day'] = self.words[0][0]
+        self.began_monitoring['calendar_day'] = self.words[0][1]
+        self.began_monitoring['month'] = self.words[0][2]
+        self.began_monitoring['year'] = self.words[0][3]
+        day_hour_sec = self.words[0][4].split(":")
+        # convert to military time for easier time math
+        if self.words[0][5] is "PM":
+            if day_hour_sec[1] < 12:
+                day_hour_sec[1] += 12
