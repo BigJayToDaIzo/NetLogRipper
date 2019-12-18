@@ -24,6 +24,10 @@ class TestLogRipperInit(unittest.TestCase):
         self.assertEqual(log_ripper.file_stream, None)
         self.assertEqual(log_ripper.lines, [])
         self.assertEqual(log_ripper.words, None)
+        self.assertEqual(log_ripper.total_minutes_logged, 0)
+        self.assertEqual(log_ripper.total_hours_logged, 0)
+        self.assertEqual(log_ripper.total_days_logged, 0)
+        self.assertEqual(log_ripper.total_months_logged, 0)
 
 
 class TestLogRipperHappy(unittest.TestCase):
@@ -60,10 +64,45 @@ class TestLogRipperHappy(unittest.TestCase):
         self.assertNotEqual(self.log_ripper.began_monitoring,
                             {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
                              'second': '', 'timezone': ''})
-        # self.assertEqual(self.log_ripper.began_monitoring,
-        #                  {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '09', 'minute': '50',
-        #                   'second': '13', 'timezone': 'CST'})
+        self.assertEqual(self.log_ripper.began_monitoring,
+                         {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '09',
+                          'minute': '50',
+                          'second': '13', 'timezone': 'CST'})
 
+    def test_set_began_monitoring_converts_pm_times_to_military(self):
+        log_ripper = LogRipper()
+        sys.argv = ['', 'testpinglogpm.txt']
+        log_ripper.set_filename()
+        log_ripper.open_file_stream()
+        log_ripper.populate_lines_array()
+        log_ripper.populate_words_array()
+        log_ripper.set_began_monitoring()
+        self.assertEqual(log_ripper.began_monitoring,
+                         {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '21',
+                          'minute': '50', 'second': '13', 'timezone': 'CST'})
+        log_ripper.file_stream.close()
+
+    def test_set_ended_monitoring(self):
+        self.log_ripper.populate_lines_array()
+        self.log_ripper.populate_words_array()
+        self.log_ripper.set_ended_monitoring()
+        self.assertEqual(self.log_ripper.ended_monitoring,
+                         {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '09',
+                          'minute': '54', 'second': '20', 'timezone': 'CST'})
+
+    def test_set_ended_monitoring_converts_pm_times_to_military(self):
+        log_ripper = LogRipper()
+        sys.argv = ['', 'testpinglogpm.txt']
+        log_ripper.set_filename()
+        log_ripper.open_file_stream()
+        log_ripper.populate_lines_array()
+        log_ripper.populate_words_array()
+        log_ripper.set_ended_monitoring()
+        self.assertEqual(log_ripper.ended_monitoring, {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '21',
+                      'minute': '54', 'second': '20', 'timezone': 'CST'})
+        log_ripper.file_stream.close()
+
+class TestLogRipperTimeParsing
 
 class TestLogRipperSad(unittest.TestCase):
     @classmethod
@@ -84,6 +123,5 @@ class TestLogRipperSad(unittest.TestCase):
             self.log_ripper.open_file_stream()
         self.assertEqual(self.log_ripper.file_name, 'non_existent_logfile.txt')
 
-
-if __name__ == '__main__':
-    unittest.main()
+    if __name__ == '__main__':
+        unittest.main()
