@@ -28,33 +28,32 @@ class TestLogRipperInit(unittest.TestCase):
 
 class TestLogRipperHappy(unittest.TestCase):
     @classmethod
-    def setUp(self):
-        self.log_ripper = LogRipper()
+    def setUp(cls):
+        cls.log_ripper = LogRipper()
         sys.argv = ['', 'testpinglog.txt']
-        self.log_ripper.set_filename()
-        self.log_ripper.open_file_stream()
+        cls.log_ripper.set_filename()
+        cls.log_ripper.open_file_stream()
+
+    @classmethod
+    def tearDown(cls):
+        cls.log_ripper.file_stream.close()
 
     def test_set_filename_when_logfile_name_passed(self):
         self.assertEqual(self.log_ripper.file_name, 'testpinglog.txt')
-        self.log_ripper.file_stream.close()
 
 
     def test_reads_in_file_when_logfile_exists(self):
         self.assertIsNotNone(self.log_ripper.file_stream)
-        self.log_ripper.file_stream.close()
 
     def test_file_stream_populates_lines_array(self):
-        self.log_ripper.open_file_stream()
         self.log_ripper.populate_lines_array()
         self.assertEqual(len(self.log_ripper.lines), 4)
-        self.log_ripper.file_stream.close()
 
     def test_lines_array_populates_words_array(self):
-        self.log_ripper.open_file_stream()
         self.log_ripper.populate_lines_array()
         self.log_ripper.populate_words_array()
         self.assertIsNotNone(self.log_ripper.words)
-        self.log_ripper.file_stream.close()
+
 
 class TestLogRipperSad(unittest.TestCase):
     @classmethod
