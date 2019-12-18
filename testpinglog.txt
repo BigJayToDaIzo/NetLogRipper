@@ -1,3 +1,4 @@
 Tue 17 Dec 2019 09:50:13 AM CST: PING www.google.com (172.217.5.4) 56(84) bytes of data.
+Tue 17 Dec 2019 09:50:13 AM CST: 64 bytes from lga15s49-in-f4.1e100.net (172.217.5.4): icmp_seq=1 ttl=51 time=16.6 ms
 Tue 17 Dec 2019 09:52:59 AM CST: From ubuntu-box (192.168.1.105) icmp_seq=159 Destination Host Unreachable
 Tue 17 Dec 2019 09:54:20 AM CST: 64 bytes from ord38s19-in-f4.1e100.net (172.217.5.4): icmp_seq=240 ttl=51 time=16.6 ms
