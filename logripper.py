@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 
 
 # sys.tracebacklimit = 0
@@ -10,10 +11,8 @@ class LogRipper(object):
         self.not_connected = False
         self.disconnections = 0
         self.seconds_disconnected = 0
-        self.began_monitoring = {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                                 'second': '', 'timezone': ''}
-        self.ended_monitoring = {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                                 'second': '', 'timezone': ''}
+        self.began_monitoring = ''
+        self.ended_monitoring = ''
         self.file_name = ''
         self.file_stream = None
         self.lines = []
@@ -21,7 +20,7 @@ class LogRipper(object):
         self.total_minutes_logged = 0
         self.total_hours_logged = 0
         self.total_days_logged = 0
-        self.total_months_logged = 0g
+        self.total_months_logged = 0
 
     def set_filename(self):
         if len(sys.argv) < 2:
@@ -56,21 +55,8 @@ class LogRipper(object):
             i += 1
 
     def set_began_monitoring(self):
-        self.began_monitoring['week_day'] = self.words[0][0]
-        self.began_monitoring['calendar_day'] = self.words[0][1]
-        self.began_monitoring['month'] = self.words[0][2]
-        self.began_monitoring['year'] = self.words[0][3]
-        hour_min_sec = self.words[0][4].split(":")
-        # convert to military time for easier time math
-        if self.words[0][5] == "PM":
-            if int(hour_min_sec[0]) < 12:
-                temp_int = int(hour_min_sec[0])
-                temp_int += 12
-                hour_min_sec[0] = str(temp_int)
-        self.began_monitoring['hour'] = hour_min_sec[0]
-        self.began_monitoring['minute'] = hour_min_sec[1]
-        self.began_monitoring['second'] = hour_min_sec[2]
-        self.began_monitoring['timezone'] = self.words[0][6].strip(':')
+        stuff = self.lines[0].split(':', 2)
+        print(stuff)
 
     def set_ended_monitoring(self):
         lastIndex = len(self.lines) - 1

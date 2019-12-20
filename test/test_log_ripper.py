@@ -14,12 +14,8 @@ class TestLogRipperInit(unittest.TestCase):
         self.assertEqual(log_ripper.not_connected, False)
         self.assertEqual(log_ripper.disconnections, 0)
         self.assertEqual(log_ripper.seconds_disconnected, 0)
-        self.assertEqual(log_ripper.began_monitoring,
-                         {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                          'second': '', 'timezone': ''})
-        self.assertEqual(log_ripper.ended_monitoring,
-                         {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                          'second': '', 'timezone': ''})
+        self.assertEqual(log_ripper.began_monitoring, '')
+        self.assertEqual(log_ripper.ended_monitoring, '')
         self.assertEqual(log_ripper.file_name, '')
         self.assertEqual(log_ripper.file_stream, None)
         self.assertEqual(log_ripper.lines, [])
@@ -61,13 +57,8 @@ class TestLogRipperHappy(unittest.TestCase):
         self.log_ripper.populate_lines_array()
         self.log_ripper.populate_words_array()
         self.log_ripper.set_began_monitoring()
-        self.assertNotEqual(self.log_ripper.began_monitoring,
-                            {'week_day': '', 'calendar_day': '', 'month': '', 'year': '', 'hour': '', 'minute': '',
-                             'second': '', 'timezone': ''})
-        self.assertEqual(self.log_ripper.began_monitoring,
-                         {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '09',
-                          'minute': '50',
-                          'second': '13', 'timezone': 'CST'})
+        self.assertNotEqual(self.log_ripper.began_monitoring, '')
+        self.assertEqual(self.log_ripper.began_monitoring, '')
 
     def test_set_began_monitoring_converts_pm_times_to_military(self):
         log_ripper = LogRipper()
@@ -77,18 +68,14 @@ class TestLogRipperHappy(unittest.TestCase):
         log_ripper.populate_lines_array()
         log_ripper.populate_words_array()
         log_ripper.set_began_monitoring()
-        self.assertEqual(log_ripper.began_monitoring,
-                         {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '21',
-                          'minute': '50', 'second': '13', 'timezone': 'CST'})
+        self.assertEqual(log_ripper.began_monitoring, '')
         log_ripper.file_stream.close()
 
     def test_set_ended_monitoring(self):
         self.log_ripper.populate_lines_array()
         self.log_ripper.populate_words_array()
         self.log_ripper.set_ended_monitoring()
-        self.assertEqual(self.log_ripper.ended_monitoring,
-                         {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '09',
-                          'minute': '54', 'second': '20', 'timezone': 'CST'})
+        self.assertEqual(self.log_ripper.ended_monitoring, '')
 
     def test_set_ended_monitoring_converts_pm_times_to_military(self):
         log_ripper = LogRipper()
@@ -98,11 +85,16 @@ class TestLogRipperHappy(unittest.TestCase):
         log_ripper.populate_lines_array()
         log_ripper.populate_words_array()
         log_ripper.set_ended_monitoring()
-        self.assertEqual(log_ripper.ended_monitoring, {'week_day': 'Tue', 'calendar_day': '17', 'month': 'Dec', 'year': '2019', 'hour': '21',
-                      'minute': '54', 'second': '20', 'timezone': 'CST'})
+        self.assertEqual(log_ripper.ended_monitoring, '')
         log_ripper.file_stream.close()
 
-class TestLogRipperTimeParsing
+
+class TestLogRipperTimeParsing(unittest.TestCase):
+    @classmethod
+    def setUp(cls):
+        cls.log_ripper = LogRipper()
+        sys.argv = ['', 'testpinglog.txt']
+
 
 class TestLogRipperSad(unittest.TestCase):
     @classmethod
