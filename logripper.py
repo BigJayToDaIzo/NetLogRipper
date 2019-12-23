@@ -55,22 +55,9 @@ class LogRipper(object):
             i += 1
 
     def set_began_monitoring(self):
-        stuff = self.lines[0].split(':', 2)
-        print(stuff)
+        timestamp = int(self.lines[1].split()[0].strip('[]').split('.')[0])
+        begin_date_and_time = datetime.fromtimestamp(timestamp)
+        self.began_monitoring = begin_date_and_time
 
     def set_ended_monitoring(self):
-        lastIndex = len(self.lines) - 1
-        self.ended_monitoring['week_day'] = self.words[lastIndex][0]
-        self.ended_monitoring['calendar_day'] = self.words[lastIndex][1]
-        self.ended_monitoring['month'] = self.words[lastIndex][2]
-        self.ended_monitoring['year'] = self.words[lastIndex][3]
-        hour_min_sec = self.words[lastIndex][4].split(":")
-        if self.words[lastIndex][5] == "PM":
-            if int(hour_min_sec[0]) < 12:
-                temp_int = int(hour_min_sec[0])
-                temp_int += 12
-                hour_min_sec[0] = str(temp_int)
-        self.ended_monitoring['hour'] = hour_min_sec[0]
-        self.ended_monitoring['minute'] = hour_min_sec[1]
-        self.ended_monitoring['second'] = hour_min_sec[2]
-        self.ended_monitoring['timezone'] = self.words[lastIndex][6].strip(":")
+        timestamp = self.lines[len(self.lines) - 1].split()

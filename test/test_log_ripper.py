@@ -1,4 +1,5 @@
 from logripper import LogRipper
+from datetime import datetime
 
 import unittest
 import sys
@@ -46,7 +47,7 @@ class TestLogRipperHappy(unittest.TestCase):
 
     def test_file_stream_populates_lines_array(self):
         self.log_ripper.populate_lines_array()
-        self.assertEqual(len(self.log_ripper.lines), 4)
+        self.assertEqual(len(self.log_ripper.lines), 10)
 
     def test_lines_array_populates_words_array(self):
         self.log_ripper.populate_lines_array()
@@ -58,18 +59,13 @@ class TestLogRipperHappy(unittest.TestCase):
         self.log_ripper.populate_words_array()
         self.log_ripper.set_began_monitoring()
         self.assertNotEqual(self.log_ripper.began_monitoring, '')
-        self.assertEqual(self.log_ripper.began_monitoring, '')
-
-    def test_set_began_monitoring_converts_pm_times_to_military(self):
-        log_ripper = LogRipper()
-        sys.argv = ['', 'testpinglogpm.txt']
-        log_ripper.set_filename()
-        log_ripper.open_file_stream()
-        log_ripper.populate_lines_array()
-        log_ripper.populate_words_array()
-        log_ripper.set_began_monitoring()
-        self.assertEqual(log_ripper.began_monitoring, '')
-        log_ripper.file_stream.close()
+        # 2019-12-23 08:59:51
+        self.assertEqual(self.log_ripper.began_monitoring.year, 2019)
+        self.assertEqual(self.log_ripper.began_monitoring.month, 12)
+        self.assertEqual(self.log_ripper.began_monitoring.day, 23)
+        self.assertEqual(self.log_ripper.began_monitoring.hour, 8)
+        self.assertEqual(self.log_ripper.began_monitoring.minute, 59)
+        self.assertEqual(self.log_ripper.began_monitoring.second, 51)
 
     def test_set_ended_monitoring(self):
         self.log_ripper.populate_lines_array()
@@ -77,16 +73,6 @@ class TestLogRipperHappy(unittest.TestCase):
         self.log_ripper.set_ended_monitoring()
         self.assertEqual(self.log_ripper.ended_monitoring, '')
 
-    def test_set_ended_monitoring_converts_pm_times_to_military(self):
-        log_ripper = LogRipper()
-        sys.argv = ['', 'testpinglogpm.txt']
-        log_ripper.set_filename()
-        log_ripper.open_file_stream()
-        log_ripper.populate_lines_array()
-        log_ripper.populate_words_array()
-        log_ripper.set_ended_monitoring()
-        self.assertEqual(log_ripper.ended_monitoring, '')
-        log_ripper.file_stream.close()
 
 
 class TestLogRipperTimeParsing(unittest.TestCase):
