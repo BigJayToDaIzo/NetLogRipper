@@ -1,5 +1,5 @@
 PING www.google.com (216.239.38.117) 56(84) bytes of data.
-[1577113191.932801] 64 bytes from 216.239.38.117 (216.239.38.117): icmp_seq=1 ttl=51 time=16.1 ms
+[1569909600.932801] 64 bytes from 216.239.38.117 (216.239.38.117): icmp_seq=1 ttl=51 time=16.1 ms
 [1577116896.229429] From ubuntu-box (192.168.1.105) icmp_seq=3684 Destination Host Unreachable
 [1577116902.778835] From ubuntu-box (192.168.1.105) icmp_seq=3685 Destination Host Unreachable
 [1577116902.778882] From ubuntu-box (192.168.1.105) icmp_seq=3686 Destination Host Unreachable
@@ -7,4 +7,4 @@ PING www.google.com (216.239.38.117) 56(84) bytes of data.
 [1577116905.829503] From ubuntu-box (192.168.1.105) icmp_seq=3688 Destination Host Unreachable
 [1577116921.223339] 64 bytes from 216.239.38.117 (216.239.38.117): icmp_seq=3703 ttl=51 time=2066 ms
 [1577116921.223368] 64 bytes from 216.239.38.117 (216.239.38.117): icmp_seq=3704 ttl=51 time=1047 ms
-[1577116921.223375] 64 bytes from 216.239.38.117 (216.239.38.117): icmp_seq=3705 ttl=51 time=23.3 ms
+[1577145614.223375] 64 bytes from 216.239.38.117 (216.239.38.117): icmp_seq=3705 ttl=51 time=23.3 ms
